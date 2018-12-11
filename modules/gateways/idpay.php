@@ -59,7 +59,7 @@ function idpay_link($params)
     }
 
     $desc = $params["description"];
-    $callback = $systemurl . '/modules/gateways/callback/' . $moduleName . '.php';
+    $callback = $systemurl . 'modules/gateways/callback/' . $moduleName . '.php';
 
     if (empty($amount)) {
         return 'واحد پول انتخاب شده پشتیبانی نمی شود.';
@@ -88,7 +88,7 @@ function idpay_link($params)
     curl_close($ch);
 
     if ($http_status != 201 || empty($result) || empty($result->id) || empty($result->link)) {
-        return sprintf('خطا هنگام ایجاد تراکنش. کد خطا: %s', $http_status);
+        return sprintf('خطا هنگام ایجاد تراکنش. وضعیت خطا: %s - کد خطا: %s - پیام خطا: %s', $http_status, $result->error_code, $result->error_message);
     } else {
         return '<form method="get" action="' . $result->link . '"><input type="submit" name="pay" value="پرداخت" /></form>';
     }

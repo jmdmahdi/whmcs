@@ -11,14 +11,14 @@
  */
 
 require_once __DIR__ . '/../../../init.php';
-$whmcs->load_function('gateway');
-$whmcs->load_function('invoice');
+require_once __DIR__ . '/../../../includes/gatewayfunctions.php';
+require_once __DIR__ . '/../../../includes/invoicefunctions.php';
 
 if (!defined("WHMCS")) die();
 
 $gatewayModuleName = basename(__FILE__, '.php');
 
-$gatewayParams = getGatewayVariables($gatewaymodule);
+$gatewayParams = getGatewayVariables($gatewayModuleName);
 
 if (!$gatewayParams['type']) die('Module Not Activated');
 
@@ -81,7 +81,7 @@ if (!empty($pid) && !empty($porder_id) && $porder_id == $orderid) {
             [
                 "GET" => $_GET,
                 "POST" => $_POST,
-                "result" => sprintf('خطا هنگام بررسی وضعیت تراکنش. کد خطا: %s', $http_status)
+                "result" => sprintf('خطا هنگام بررسی وضعیت تراکنش. وضعیت خطا: %s - کد خطا: %s - پیام خطا: %s', $http_status, $result->error_code, $result->error_message)
             ], 'Failure');
         idpay_end();
     }
