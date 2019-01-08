@@ -99,6 +99,9 @@ if (!empty($pid) && !empty($porder_id) && $porder_id == $orderid) {
             ], 'Failure');
     } else {
         $paymentSuccess = true;
+        if (!empty($gatewayParams['Currencies']) && $gatewayParams['Currencies'] == 'Toman') {
+          $amount = $amount / 10;
+        }
         addInvoicePayment($orderid, $inquiry_track_id, $amount, 0, $gatewaymodule);
         logTransaction($gatewayParams['name'],
             [
